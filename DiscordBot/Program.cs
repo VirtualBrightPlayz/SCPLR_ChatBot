@@ -23,7 +23,7 @@ public class Program
 
     private async Task OnMessage(SocketMessage arg)
     {
-        if (arg.Content.ToLower().StartsWith("scplr_"))
+        if (arg.Content.ToLower().StartsWith("scplr_") && arg.Channel is SocketGuildChannel)
         {
             await arg.Channel.SendMessageAsync($"(SCP: Labrat) {await LabratAPI.Handle(arg.Content.Remove(0, 6))}");
         }
