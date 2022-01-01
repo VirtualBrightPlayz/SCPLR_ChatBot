@@ -73,12 +73,13 @@ namespace ChatBot_Demo
 
                             //Trim the message to just the chat message piece
                             string msgTrimmed = trimMessage(msg);
+                            string msgAuthor = trimUser(msg);
 
                             //Handling commands
                             var splt = msgTrimmed.Split(' ');
                             if (msgTrimmed.ToLower().StartsWith("!scplr_"))
                             {
-                                toRespond = $"(SCP: Labrat) {LabratAPI.Handle(msgTrimmed.Remove(0, 7)).GetAwaiter().GetResult()}";
+                                toRespond = $"(SCP: Labrat) {LabratAPI.Handle(msgTrimmed.Remove(0, 7), msgAuthor).GetAwaiter().GetResult()}";
                             }
 
                             //Write response to console and send message to chat
@@ -105,6 +106,15 @@ namespace ChatBot_Demo
         {
             int indexOfSecondColon = getNthIndex(message, ':', 2);
             var result = message.Substring(indexOfSecondColon + 1);
+            return result;
+        }
+
+        public static string trimUser(string message)
+        {
+            int indexOfFirst = getNthIndex(message, '!', 1);
+            if (indexOfFirst == -1)
+                return string.Empty;
+            var result = message.Substring(1, indexOfFirst - 1);
             return result;
         }
 

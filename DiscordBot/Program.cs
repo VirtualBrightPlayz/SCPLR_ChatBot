@@ -25,7 +25,7 @@ public class Program
     {
         if (arg.Content.ToLower().StartsWith("scplr_") && channels_to_join.Contains(arg.Channel.Id.ToString()))
         {
-            await arg.Channel.SendMessageAsync($"(SCP: Labrat) {await LabratAPI.Handle(arg.Content.Remove(0, 6))}");
+            await arg.Channel.SendMessageAsync($"(SCP: Labrat) {await LabratAPI.Handle(arg.Content.Remove(0, 6), arg.Author.Username)}");
         }
     }
 

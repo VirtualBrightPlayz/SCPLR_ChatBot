@@ -27,7 +27,7 @@ public static class LabratAPI
         return await response.Content.ReadAsStringAsync();
     }
 
-    public static async Task<string> Handle(string arg)
+    public static async Task<string> Handle(string arg, string sender = "")
     {
         var spl = arg.Split(' ');
         switch (spl[0].ToLower())
@@ -36,30 +36,25 @@ public static class LabratAPI
             {
                 if (spl.Length == 2)
                 {
-                    HttpClient http = new HttpClient();
                     string i = string.Empty;
                     foreach (var item in spl[1].ToLower())
                     {
                         if (allowedChars.Contains(item))
                             i += item;
                     }
-                    return await Spawn(i);
+                    string ret = await Spawn(i);
+                    if (!string.IsNullOrEmpty(sender))
+                        await Text($"{sender} spawned in {i} for you.");
+                    return ret;
                 }
             }
             break;
             case "die":
             {
-                return await Die();
-            }
-            case "text":
-            {
-                string str = string.Empty;
-                for (int i = 1; i < spl.Length; i++)
-                {
-                    str += spl[i] + " ";
-                }
-                str = str.Trim();
-                return await Text(str);
+                    string ret = await Die();
+                    if (!string.IsNullOrEmpty(sender))
+                        await Text($"{sender} killed you.");
+                    return ret;
             }
         }
         return string.Empty;
