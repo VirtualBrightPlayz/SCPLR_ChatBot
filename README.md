@@ -1,6 +1,6 @@
 # SCP: Labrat Chat Bot example
 
-Works on version 1.94 and up.
+Works on versions 1.94 to 1.96
 
 ## Credits
 
